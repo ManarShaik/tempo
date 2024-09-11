@@ -19,7 +19,6 @@ const (
 
 func ColorFlag() string{
 	colorFlag := flag.String("color", "Reset", "printing in colors")
-	flag.Parse()
 	colorMap := map[string]string{
 		"red":     Red,
 		"green":   Green,

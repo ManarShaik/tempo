@@ -1,13 +1,15 @@
 package Methods
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 const (
 	Reset = "\033[0m"
 )
 
-func PrintAscii(argLettersDivided, fileLines []string, subString string, color *string) {
-	desiredColor := color
+func PrintAscii(argLettersDivided, fileLines []string, subString string, color *string, width int, align string) {
 	tempColor := Reset
 	var start int = 0
 	count := 0
@@ -16,10 +18,13 @@ func PrintAscii(argLettersDivided, fileLines []string, subString string, color *
 			fmt.Println()
 			continue
 		}
+		leftSpacess , rightSpace := Justify(align, width, argLettersDivided[i], fileLines)
 		for j := 0; j < 8; j++ {
+			fmt.Print(strings.Repeat(" ", leftSpacess))
 			for k := 0; k < len(argLettersDivided[i]); k++ {
+				
 				if (argLettersDivided[i])[k] == subString[0] && i+len(subString)-1 <= len(argLettersDivided[i])-1 {
-					tempColor = *desiredColor
+					tempColor = *color
 					count = len(subString)
 				}
 				start = ((int((argLettersDivided[i])[k]) - 32) * 9) + (j + 1)
@@ -29,12 +34,16 @@ func PrintAscii(argLettersDivided, fileLines []string, subString string, color *
 				}
 				fmt.Print(tempColor + fileLines[start])
 				start = 0
-			}
-			fmt.Print("\n")
+			
 			if count==1{
 				tempColor=Reset
 			}
 			count--
+
+			}
+			fmt.Print(strings.Repeat(" ", rightSpace))
+			fmt.Print("\n")
+			
 		}
 	}
 }
