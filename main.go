@@ -16,10 +16,10 @@ var(
 )
 func main() {
     flag.Parse()
-
 	align := FlagsCollection.JustifyFlag(*alignFlag)
 	color := FlagsCollection.ColorFlag(*colorFlag)
 	args := flag.Args()
+
 	if !Methods.ValidateArg(args){
 		fmt.Println("unvalide argument")
 		return

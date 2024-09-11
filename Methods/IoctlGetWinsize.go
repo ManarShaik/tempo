@@ -5,27 +5,24 @@ import (
     "unsafe"
 )
 
-
+// Define Winsize structure
 type Winsize struct {
-    Row    uint16
-    Col    uint16
-    Xpixel uint16
-    Ypixel uint16
+    Row, Col, Xpixel, Ypixel uint16
 }
 
-
-func IoctlGetWinsize(fd int, req int, ws *Winsize) (error, int) {
-    // Perform the syscall to get the terminal size
-    _, _, err := syscall.Syscall(
+// IoctlGetWinsize uses the ioctl system call to get the terminal window size
+func IoctlGetWinsize(fd int, req uintptr, ws *Winsize) (int, int) {
+    ret, _, errno := syscall.Syscall6(
         syscall.SYS_IOCTL,
         uintptr(fd),
-        uintptr(req),
+        req,
         uintptr(unsafe.Pointer(ws)),
+        0, // extra arguments are set to 0
+        0,
+        0,
     )
-    if err != 0 {
-        return err, 0
+    if errno != 0 {
+        return -1, 0
     }
-
-
-    return nil, int(ws.Col)
+    return int(ret), int(ws.Col) // return width
 }
