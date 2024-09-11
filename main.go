@@ -15,13 +15,20 @@ var(
 
 )
 func main() {
+	preArgs := os.Args[1:]
+	for i:=0; i<len(preArgs); i++{
+        if (strings.HasPrefix(preArgs[i], "--") || strings.HasPrefix(preArgs[i], "-"))&& strings.Contains(preArgs[i], "=")&&(!strings.Contains(preArgs[i], "color")&&!strings.Contains(preArgs[i], "align")){
+            fmt.Println("Unrecognized flag")
+            return
+        }
+    }
     flag.Parse()
 	align := FlagsCollection.JustifyFlag(*alignFlag)
 	color := FlagsCollection.ColorFlag(*colorFlag)
 	args := flag.Args()
 
 	if !Methods.ValidateArg(args){
-		fmt.Println("unvalide argument")
+		fmt.Println("Unvalid argument")
 		return
 	}
     var ws Methods.Winsize
