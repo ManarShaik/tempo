@@ -9,11 +9,16 @@ import (
 	"strings"
     "syscall"
 )
+var(
+	alignFlag = flag.String("align", "AlignLeft", "Text alignment options: left, right, center, justify")
+    colorFlag = flag.String("color", "Reset", "printing in colors")
 
+)
 func main() {
-	color := FlagsCollection.ColorFlag()
-	align := FlagsCollection.JustifyFlag()
     flag.Parse()
+
+	align := FlagsCollection.JustifyFlag(*alignFlag)
+	color := FlagsCollection.ColorFlag(*colorFlag)
 	args := flag.Args()
 	if !Methods.ValidateArg(args){
 		fmt.Println("unvalide argument")

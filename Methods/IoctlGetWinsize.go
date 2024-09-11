@@ -1,7 +1,6 @@
 package Methods
 
 import (
-    "fmt"
     "syscall"
     "unsafe"
 )
@@ -27,11 +26,6 @@ func IoctlGetWinsize(fd int, req int, ws *Winsize) (error, int) {
         return err, 0
     }
 
-    // Print the dimensions of the terminal
-    fmt.Printf("Row: %d\n", ws.Row)
-    fmt.Printf("Col: %d\n", ws.Col)
-    fmt.Printf("Xpixel: %d\n", ws.Xpixel)
-    fmt.Printf("Ypixel: %d\n", ws.Ypixel)
 
     return nil, int(ws.Col)
 }

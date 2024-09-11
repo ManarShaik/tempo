@@ -15,8 +15,7 @@ case "right":
 	return spacesRemain , 0
 case "center":
 	return spacesRemain/2 , spacesRemain/2
-case "justify":
+default:
 	return 0,0
 }
-return 0,0
 }

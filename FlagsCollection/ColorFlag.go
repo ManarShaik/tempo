@@ -1,7 +1,7 @@
 package FlagsCollection
 
 import (
-	"flag"
+
 	"fmt"
 	"strings"
 )
@@ -17,8 +17,8 @@ const (
 	White   = "\033[37m"
 )
 
-func ColorFlag() string{
-	colorFlag := flag.String("color", "Reset", "printing in colors")
+func ColorFlag(colorFlag string) string{
+	
 	colorMap := map[string]string{
 		"red":     Red,
 		"green":   Green,
@@ -29,7 +29,7 @@ func ColorFlag() string{
 		"white":   White,
 		"reset":   Reset,
 	}
-	colorKey := strings.ToLower(*colorFlag)
+	colorKey := strings.ToLower(colorFlag)
 	color, exists := colorMap[colorKey]
 	if !exists {
 		fmt.Println("Invalid color specified. Defaulting to Reset.")
