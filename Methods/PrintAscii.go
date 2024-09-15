@@ -24,8 +24,11 @@ func PrintAscii(argLettersDivided, fileLines []string, subString string, color *
 			for k := 0; k < len(argLettersDivided[i]); k++ {
 				
 				if (argLettersDivided[i])[k] == subString[0] && i+len(subString)-1 <= len(argLettersDivided[i])-1 {
-					tempColor = *color
-					count = len(subString)
+					if ValidateSubString(subString, (argLettersDivided[i])[k:k+len(subString)]){
+					    tempColor = *color
+					    count = len(subString)
+					}
+				
 				}
 				start = ((int((argLettersDivided[i])[k]) - 32) * 9) + (j + 1)
 				if (argLettersDivided[i])[k] == ' ' {
