@@ -7,35 +7,30 @@ import (
 	"fmt"
 	"os"
 	"strings"
-    "syscall"
 )
-var(
-	alignFlag = flag.String("align", "AlignLeft", "Text alignment options: left, right, center, justify")
-    colorFlag = flag.String("color", "Reset", "printing in colors")
 
+var (
+	alignFlag = flag.String("align", "AlignLeft", "Text alignment options: left, right, center, justify")
+	colorFlag = flag.String("color", "Reset", "printing in colors")
+)
+const (
+    TIOCGWINSZ = 0x5400 // ioctl request code for getting window size
 )
 func main() {
-	preArgs := os.Args[1:]
-	for i:=0; i<len(preArgs); i++{
-        if (strings.HasPrefix(preArgs[i], "--") || strings.HasPrefix(preArgs[i], "-"))&& strings.Contains(preArgs[i], "=")&&(!strings.Contains(preArgs[i], "color")&&!strings.Contains(preArgs[i], "align")){
-            fmt.Println("Unrecognized flag")
-            return
-        }
-    }
-    flag.Parse()
+	flag.Parse()
+
 	align := FlagsCollection.JustifyFlag(*alignFlag)
 	color := FlagsCollection.ColorFlag(*colorFlag)
 	args := flag.Args()
-
-	if !Methods.ValidateArg(args){
-		fmt.Println("Unvalid argument")
+	if !Methods.ValidateArg(args) {
+		fmt.Println("unvalide argument")
 		return
 	}
-    var ws Methods.Winsize
-    _, width := Methods.IoctlGetWinsize(int(os.Stdin.Fd()), syscall.TIOCGWINSZ, &ws)
+	var ws Methods.Winsize
+	_, width := Methods.IoctlGetWinsize(int(os.Stdin.Fd()), TIOCGWINSZ, &ws)
 
-    subString , str , banner := Methods.SubstringAndBanner(args)
-	if subString==""{
+	subString, str, banner := Methods.SubstringAndBanner(args)
+	if subString == "" {
 		return
 	}
 	File, err := os.ReadFile(banner)
@@ -48,6 +43,5 @@ func main() {
 	argLettersDivided := Methods.SplitWithNewlines(resultStr)
 
 	Methods.PrintAscii(argLettersDivided, fileLines, subString, &color, width, align)
-	
 
 }
