@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"os"
 	"strings"
-    "syscall"
 )
 var(
 	alignFlag = flag.String("align", "AlignLeft", "Text alignment options: left, right, center, justify")
@@ -31,8 +30,8 @@ func main() {
 		fmt.Println("Unvalid argument")
 		return
 	}
-    var ws Methods.Winsize
-    _, width := Methods.IoctlGetWinsize(int(os.Stdin.Fd()), syscall.TIOCGWINSZ, &ws)
+    
+    width := Methods.IoctlGetWinsize()
 
     subString , str , banner := Methods.SubstringAndBanner(args)
 	if subString==""{
