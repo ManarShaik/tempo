@@ -2,6 +2,7 @@ package Methods
 
 import (
 	"os"
+<<<<<<< HEAD
 	"os/exec"
 	"strconv"
 )
@@ -25,3 +26,30 @@ func IoctlGetWinsize() int {
 // type Winsize struct {
 // 	Row, Col, Xpixel, Ypixel uint16
 // }
+=======
+	"fmt"
+	"os/exec"
+    "strconv"
+)
+
+// Define Winsize structure
+type Winsize struct {
+	Row, Col, Xpixel, Ypixel uint16
+}
+
+// IoctlGetWinsize uses the ioctl system call to get the terminal window size
+func IoctlGetWinsize() int {
+
+    // Create the command
+	cmd := exec.Command("tput", "cols")
+
+	cmd.Stdin=os.Stdin
+
+    out,_:=cmd.Output()
+
+	// Print the number of columns
+	result,_:=strconv.Atoi(string(out[:len(out)-1]))
+     fmt.Println(result)
+	return result
+}
+>>>>>>> cbf17a8d05f4635044ccad4e580761829a9ee821

@@ -41,8 +41,13 @@ func main() {
 		fmt.Println("Unvalid argument")
 		return
 	}
+<<<<<<< HEAD
 	// Get the terminal width
 	width := Methods.IoctlGetWinsize()
+=======
+    
+    width := Methods.IoctlGetWinsize()
+>>>>>>> cbf17a8d05f4635044ccad4e580761829a9ee821
 
 	// Process the arguments to extract substring and banner file name
 	subString, str, banner := Methods.SubstringAndBanner(args)
